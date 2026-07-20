@@ -1,0 +1,1 @@
+/Users/its.winny/conductor/repos/personal-website/.claude/skills/gstack/setup-gbrain/SKILL.md
