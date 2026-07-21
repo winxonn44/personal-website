@@ -17,8 +17,8 @@ export default function Contact() {
           </a>
         </p>
         <p data-reveal className="mt-4 font-mono text-[0.8rem] uppercase tracking-[0.12em] text-muted">
-          <a href="#" className="hover:text-bone">GitHub ↗</a> &nbsp;·&nbsp;
-          <a href="https://www.linkedin.com/in/winxon-nguyen-ba166336b/" className="hover:text-bone">LinkedIn ↗</a> &nbsp;·&nbsp;
+          <a href="https://github.com/winxonn44" target="_blank" rel="noreferrer" className="hover:text-bone">GitHub ↗</a> &nbsp;·&nbsp;
+          <a href="https://www.linkedin.com/in/winxon-nguyen-ba166336b/" target="_blank" rel="noreferrer" className="hover:text-bone">LinkedIn ↗</a> &nbsp;·&nbsp;
           Los Angeles, CA
         </p>
         <footer className="mt-[100px] border-t border-line pt-8 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-muted">

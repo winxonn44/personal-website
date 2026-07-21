@@ -28,7 +28,9 @@ export default function Resume() {
           </div>
           <div data-reveal className="md:pt-5">
             <a
-              href="/resume.pdf"
+              href={`${import.meta.env.BASE_URL}resume.pdf`}
+              target="_blank"
+              rel="noreferrer"
               className="inline-block rounded-sm bg-amber px-6 py-3.5 font-mono text-[0.74rem] font-bold uppercase tracking-[0.12em] text-ink transition-[filter] hover:brightness-110"
             >
               Download résumé ↓
