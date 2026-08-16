@@ -1,4 +1,5 @@
 import Eyebrow from './Eyebrow.jsx'
+import TicketCard from './TicketCard.jsx'
 
 const roles = [
   ['2025–Present', 'Developer — CruX Neuroscience', 'Real-time EEG ETL + deep model for focus-state detection.'],
@@ -15,18 +16,22 @@ export default function Resume() {
       <div className="mx-auto max-w-content px-8">
         <Eyebrow num="§03">Resume</Eyebrow>
         <div className="grid gap-[60px] md:grid-cols-[1fr_auto]">
-          <div>
+          <div className="flex flex-col gap-4">
             {roles.map(([year, role, note]) => (
-              <div key={role} data-reveal className="grid grid-cols-1 gap-1 border-t border-line py-5 md:grid-cols-[130px_1fr]">
+              <TicketCard
+                key={role}
+                data-reveal
+                className="grid grid-cols-1 gap-1 rounded-sm border border-line bg-surface px-6 py-5 md:grid-cols-[140px_1fr]"
+              >
                 <span className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-amber">{year}</span>
-                <div>
+                <div className="ticket-perf md:pl-7">
                   <div className="font-display text-[1.4rem] font-[360] leading-tight">{role}</div>
                   <p className="mt-1 text-[0.95rem] text-muted">{note}</p>
                 </div>
-              </div>
+              </TicketCard>
             ))}
           </div>
-          <div data-reveal className="md:pt-5">
+          <div data-reveal className="md:pt-1">
             <a
               href={`${import.meta.env.BASE_URL}resume.pdf`}
               target="_blank"

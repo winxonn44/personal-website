@@ -5,8 +5,11 @@ const links = [
   ['About', '#about'],
   ['Projects', '#projects'],
   ['Resume', '#resume'],
+  ['Education', '#education'],
   ['Contact', '#contact'],
 ]
+
+const NAME = 'Winxon Nguyen'
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
@@ -20,8 +23,22 @@ export default function Nav() {
 
   return (
     <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-line bg-ink/70 px-8 py-[18px] backdrop-blur-md">
-      <a href="#home" onClick={() => setOpen(false)} className="font-mono text-[0.78rem] uppercase tracking-[0.18em]">
-        <span className="text-amber">§</span> Winxon&nbsp;Nguyen
+      <a
+        href="#home"
+        onClick={() => setOpen(false)}
+        className="name-link relative font-mono text-[0.78rem] uppercase tracking-[0.18em] text-muted"
+      >
+        <span className="mr-1 text-amber">§</span>
+        {NAME.split('').map((ch, i) => (
+          <span
+            key={i}
+            className="name-letter"
+            style={{ transitionDelay: `${i * 22}ms` }}
+          >
+            {ch === ' ' ? ' ' : ch}
+          </span>
+        ))}
+        <span className="name-sweep" aria-hidden="true" />
       </a>
 
       {/* Desktop links */}
