@@ -58,7 +58,7 @@ export default function Education() {
           {/* Right: compact vertical timeline */}
           <ol className="relative ml-2 border-l border-line pl-9">
             {timeline.map(([year, title, note]) => (
-              <li key={title} data-reveal className="relative pb-8 last:pb-0">
+              <li key={`${year}-${title}`} data-reveal className="relative pb-8 last:pb-0">
                 <span
                   className="tl-node absolute -left-[calc(2.25rem+7px)] top-1.5 h-3.5 w-3.5 rounded-full border"
                   aria-hidden="true"

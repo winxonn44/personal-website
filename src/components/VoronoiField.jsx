@@ -1,6 +1,20 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
+function supportsWebGL() {
+  try {
+    const canvas = document.createElement('canvas')
+    return Boolean(
+      window.WebGLRenderingContext &&
+        (canvas.getContext('webgl2') ||
+          canvas.getContext('webgl') ||
+          canvas.getContext('experimental-webgl')),
+    )
+  } catch {
+    return false
+  }
+}
+
 // A live 3D "Voronoi-inspired" field: drifting points with distance-linked
 // edges (amber for near neighbours, bone for far), real depth via fog and
 // perspective, and camera parallax on mouse + scroll for the fourth-wall feel.
@@ -14,6 +28,7 @@ export default function VoronoiField({ coordRef }) {
     const el = mount.current
     if (!el) return
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!supportsWebGL()) return
 
     let renderer
     try {

@@ -60,6 +60,7 @@ export default function Nav() {
         type="button"
         aria-label={open ? 'Close menu' : 'Open menu'}
         aria-expanded={open}
+        aria-controls="mobile-menu"
         onClick={() => setOpen((v) => !v)}
         className="relative z-50 flex h-6 w-7 flex-col justify-center gap-[5px] md:hidden"
       >
@@ -77,6 +78,8 @@ export default function Nav() {
 
       {/* Mobile menu overlay */}
       <div
+        id="mobile-menu"
+        aria-hidden={!open}
         className={`fixed inset-0 z-40 flex flex-col justify-center bg-ink px-8 transition-opacity duration-300 md:hidden ${
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
@@ -87,6 +90,7 @@ export default function Nav() {
               <a
                 href={href}
                 onClick={() => setOpen(false)}
+                tabIndex={open ? undefined : -1}
                 className="font-display text-[clamp(2.4rem,10vw,3.6rem)] font-[350] leading-none tracking-[-0.02em] text-bone transition-colors hover:text-amber"
               >
                 <span className="mr-4 align-super font-mono text-[0.9rem] text-amber">
