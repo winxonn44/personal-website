@@ -5,11 +5,16 @@ import Eyebrow from './Eyebrow.jsx'
 
 // Placeholder entries — swap copy/dates for the real education + achievements.
 const timeline = [
-  ['2024–Present', 'B.S. Applied Mathematics (Computing) — UCLA', 'Minor in Statistics & Data Science.'],
-  ['2026', 'Placeholder Achievement', 'Award / competition / publication.'],
-  ['2025', 'Placeholder Achievement', 'Award / competition / publication.'],
-  ['2023', 'Sold Twin Digital Media', 'Built and sold a data-driven marketing company — six figures, at 19.'],
-  ['2022', 'Placeholder Milestone', 'Earlier honor or recognition.'],
+  ['2027', 'Exhibition App for Oceanside Museum of Art', 'Showcasing interactive app for museum visitors, exploring field of art developed with machine learning and algorithms.'],  
+  ['2026-Present', 'Reseacher and Lead Developer @ Math + Code + Art', 'Wrote publication on 2 dimensional Voronoi Diagram implementation in to art. Implemented vision Deep Learning model to segment generalized objects based on user focus..'],
+  ['2026', 'UCLA Startup Labs', 'Built a scraping and embedding pipeline combining a custom CNN (image) and an adapted NLP model (text) to mapmulti-modal social signals into a 4-dimensional semantic feature space. Backtested a downstream trading strategy on ~50 event-contract markets on Kalshi over a 4-month window, achievinga Sharpe ratio of 1.38.'],
+  ['2025–Present', 'B.S. Applied Mathematics Specialization in Computing — UCLA', 'Double Major in Statistics & Data Science.'],
+  ['2023-2025', 'Sold Twin Digital Media', 'Built and sold a social media marketing company — six figures, at 18.'],
+  ['2024-2025', 'AI Task Force (C-VUSD)', 'Designed district-wide AI adoption framework for scalable use in education through policy and teaching psychology. Trained specialized RNN agents for personalized teaching and administered use. Distributed to 20,000+ users.'],
+  ['2024-2025', 'Research Team Lead (International Bacc.', 'Wrote a 30+ page paper on Fourier Analysis & Wave Dynamic applications in order to improve musical harmonics. Conducted empirical study of the harmonic composition of an optimal music tone across different classifications of instruments.'],
+  ['2022-2024', 'Southern California Band Gold, Bronze, Silver Medalist', 'SCSBOA 4A Division 1st Place.'],
+  ['2017', 'C-VUSD Youth Robotics Award', 'Medaled at regional youth robotics competition.'],
+
 ]
 
 export default function Education() {
@@ -44,14 +49,10 @@ export default function Education() {
           {/* Left: narrative — placeholder for school experience, clubs, etc. */}
           <div data-reveal>
             <p className="font-display text-[clamp(1.3rem,2.6vw,1.9rem)] font-[350] leading-[1.3] tracking-[-0.01em]">
-              Placeholder paragraph — a few sentences on the school experience:
-              coursework you loved, <b className="font-normal text-amber">clubs and orgs</b>,
-              teams, and the moments that shaped how you think and build.
+              A small timeline of my life, some trials, achievements, and roles that have helped to define a part of me.
             </p>
             <p className="mt-5 max-w-[46ch] text-[1rem] leading-[1.55] text-muted">
-              Second placeholder paragraph — room for anything the timeline
-              doesn’t capture: leadership, community, or the through-line of the work.
-              Swap this copy anytime.
+              As both a student, engineer, and entrepreneur, my roles have reflected the challenges I have tackled and further insight to what I hope to accomplish in the future.
             </p>
           </div>
 
