@@ -1,6 +1,28 @@
-node_modules
-dist
+# Build output
+dist/
+
+# Dependencies
+node_modules/
+
+# Local Claude Code / agent tooling — not for version control
+.agents/
+.claude
+skills-lock.json
+
+# macOS
 .DS_Store
-*.local
-.vite
-.gstack/
+**/.DS_Store
+
+# Windows
+Thumbs.db
+
+# Microsoft Office temp files
+~$*
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.*
