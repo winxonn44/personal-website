@@ -1,1 +1,0 @@
-/Users/its.winny/conductor/repos/personal-website/.claude/skills/gstack/gstack-upgrade/SKILL.md

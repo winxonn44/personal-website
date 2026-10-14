@@ -1,1 +1,0 @@
-/Users/its.winny/conductor/repos/personal-website/.claude/skills/gstack/qa-only/SKILL.md
