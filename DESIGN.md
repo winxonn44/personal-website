@@ -2,10 +2,10 @@
 
 ## Product Context
 - **What this is:** Personal portfolio, a single scrolling page. The motion *is* the owner's real mathematics rendered live, not decoration.
-- **Who it's for:** Data-science / ML internship recruiters (primary), SWE recruiters (secondary), defense-software teams (tertiary).
+- **Who it's for:** Autonomy / navigation / defense-software and AV recruiters (primary), SWE and ML recruiters (secondary), quant (tertiary).
 - **Space/industry:** Engineer/student portfolio. Peers: sawad.framer.website, redoyanulhaque.me, ricardochance.com.
 - **Project type:** Editorial single-page portfolio, static, hosted on GitHub Pages.
-- **Memorable thing (north star):** "A mathematical engineer who has taste, and builds." Every decision serves this.
+- **Memorable thing (north star):** "Autonomy software from the math up, measured end to end." Every decision serves this; the design shows the taste instead of claiming it.
 
 ## Aesthetic Direction
 - **Direction:** Editorial / Magazine, dark.
@@ -63,5 +63,6 @@
 | 2026-07-20 | Hero motion = Bold (dialed back ~15%) | User wants "fourth wall" depth + parallax without the "too much" failure mode |
 | 2026-08-15 | Voronoi field intensified ~30% over baseline (denser points, deeper cursor/scroll parallax, new cursor "gravity well" that pulls points + grows amber edges to the pointer) — supersedes the "Bold −15%" ceiling for the hero | User explicit approval; wants a stronger fourth-wall pull inspired by boyuanli.vercel.app. Mobile stays lighter (fewer points). |
 | 2026-08-15 | Resume + Selected Work rendered as notched "ticket" cards with cursor-driven 3D tilt — overrides the "text is never trapped in cards" rule for these two sections | User explicit approval; wants the ticket/hover-move treatment from a reference site. Reduced-motion disables tilt/glint; editorial rows elsewhere unchanged. |
-| 2026-08-15 | Added Home-hero portrait as a framed plate + "Education & Achievements" section (§04, two-column: narrative + compact vertical timeline) after Resume; nav name gets per-letter lift + amber underline sweep | User request. Portrait framed with amber corner ticks + PLATE caption. Section order now Home→About→Projects→Resume→Education→Contact. |
+| 2026-08-15 | Added Home-hero portrait as a framed plate + "Education & Achievements" section (§04, two-column: narrative + compact vertical timeline) after Resume; nav name gets per-letter lift + amber underline sweep | User request. Portrait framed with amber corner ticks + PLATE caption. Section order now Home→About→Projects→Resume→Education→Contact (Education later removed, see 2026-10-19). |
 | 2026-08-15 | Reverted hero portrait from ink→amber duotone to natural color | User feedback: the amber tint was too heavy. Kept the thin frame + corner ticks + PLATE caption so it still reads editorially against the dark canvas. |
+| 2026-10-19 | Repositioned for autonomy/navigation roles: VoroNav is FIG.01 flagship (demo GIF, result bullets, code links); hero tagline replaced with positioning line + CTAs; Education timeline removed (high-school items cut, education moved into About facts); Contact is now §04 | Recruiter review: best project was missing, every project linked nowhere, and the site contradicted the resume (grad year, double major, age at sale). |

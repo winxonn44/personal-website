@@ -2,12 +2,11 @@ import Eyebrow from './Eyebrow.jsx'
 import TicketCard from './TicketCard.jsx'
 
 const roles = [
-  ['2025–Present', 'Developer — CruX Neuroscience', 'Real-time EEG ETL + deep model for focus-state detection.'],
-  ['2026–Present', 'Founder — UCLA Startup Labs (Data Infra for ML)', 'Semantic pipelines feeding trading & game-theory models.'],
-  ['2026–Present', 'Researcher — UCLA Math + Code + Art', 'Higher-dimensional Voronoi tessellation art + style transfer.'],
-  ['2023–2025', 'Research Lead — Fourier & Wave Dynamics (IB)', '30+ page paper; live FFT signal-processing companion app.'],
-  ['2023–2025', 'Founder — Twin Digital Media', 'Built and sold a data-driven marketing company for six figures.'],
-  ['2024–2025', 'Team Lead — C-VUSD AI Task Force', 'District-wide AI-adoption framework; trained teaching agents.'],
+  ['2026', 'Developer — VoroNav (independent project)', 'Offline perception-to-planning stack; from-scratch parallel Voronoi engine and 58K-run planner study.'],
+  ['Sep 2025–Present', 'Developer — CruX Neuroscience', 'Real-time 16-channel EEG pipeline and focus-state classifier behind a Python API.'],
+  ['Apr 2026–Present', 'Researcher & Lead Developer — UCLA Math + Code + Art', 'SAM-driven Voronoi tessellation app for the Oceanside Museum of Art.'],
+  ['2026', 'Founder — UCLA Startup Labs', 'Multimodal CNN + NLP embedding pipeline; backtested on Kalshi event contracts.'],
+  ['2023–2025', 'Founder — Twin Digital Media', 'Built and sold a social-media marketing company at 18.'],
 ]
 
 export default function Resume() {
@@ -41,7 +40,7 @@ export default function Resume() {
               Download résumé ↓
             </a>
             <p className="mt-3 max-w-[24ch] font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted">
-              PDF · updated 2026
+              PDF · updated Oct 2026
             </p>
           </div>
         </div>

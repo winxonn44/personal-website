@@ -1,12 +1,13 @@
 import Eyebrow from './Eyebrow.jsx'
 
 const facts = [
-  ['Program', 'BS Applied Math (Computing), UCLA'],
-  ['Minor', 'Statistics & Data Science'],
-  ['Standing', '2nd year · near-senior credits'],
-  ['Also', 'Founded & sold a company — six figures, at 19'],
+  ['Degrees', 'BS Applied Math (Computing) + BS Statistics & Data Science'],
+  ['School', 'UCLA · Class of 2028'],
+  ['Focus', 'Perception · planning · GPU / parallel computing'],
+  ['Stack', 'Python · PyTorch · Numba · Metal · NumPy · C++ · SQL'],
+  ['Also', 'Founded & sold Twin Digital Media at 18'],
+  ['Status', 'U.S. Citizen · seeking Summer 2027 internships'],
   ['Languages', 'English · Vietnamese · Mandarin'],
-  ['Stack', 'Python · C++ · PyTorch · SQL · R'],
 ]
 
 export default function About() {
@@ -16,8 +17,9 @@ export default function About() {
         <Eyebrow num="§01">About</Eyebrow>
         <div className="grid gap-[60px] md:grid-cols-[1.4fr_1fr]">
           <p data-reveal className="font-display text-[clamp(1.5rem,3vw,2.2rem)] font-[350] leading-[1.25] tracking-[-0.01em]">
-            Applied mathematician who <b className="font-normal text-amber">builds the thing</b> — from EEG
-            pipelines to trading-signal ML to tessellation art. Rigor first, then ship.
+            Applied mathematician who <b className="font-normal text-amber">builds the thing</b>, then measures it:
+            offline navigation, real-time sensor pipelines, and GPU kernels. Every claim ships with a benchmark,
+            including the ones that came out a tie.
           </p>
           <div data-reveal>
             {facts.map(([k, v]) => (
