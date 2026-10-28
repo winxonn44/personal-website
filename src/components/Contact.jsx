@@ -4,7 +4,7 @@ export default function Contact() {
   return (
     <section id="contact" className="py-[120px]">
       <div className="mx-auto max-w-content px-8">
-        <Eyebrow num="§04">Contact</Eyebrow>
+        <Eyebrow num="§05">Contact</Eyebrow>
         <h3 data-reveal className="font-display text-[clamp(2.4rem,7vw,5rem)] font-[350] leading-none tracking-[-0.02em]">
           Build something difficult.
         </h3>
