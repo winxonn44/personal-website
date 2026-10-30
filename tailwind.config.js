@@ -8,11 +8,12 @@ export default {
         surface: '#141417',
         line: '#26262b',
         bone: '#EDEAE3',
-        muted: '#6E6E77',
+        muted: '#8A8A93', // 5.8:1 on ink (was #6E6E77, 3.9:1)
         amber: '#F0A227',
       },
       fontFamily: {
         display: ['Fraunces', 'serif'],
+        hero: ['"Instrument Serif"', 'serif'],
         body: ['Satoshi', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },

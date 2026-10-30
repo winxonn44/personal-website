@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { LazyMotion, MotionConfig, domMax } from 'motion/react'
 import Nav from './components/Nav.jsx'
+import SectionRail from './components/SectionRail.jsx'
+import Background from './components/Background.jsx'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
 import Projects from './components/Projects.jsx'
@@ -9,36 +9,26 @@ import Resume from './components/Resume.jsx'
 import Hobbies from './components/Hobbies.jsx'
 import Contact from './components/Contact.jsx'
 
+// Motion runs through LazyMotion + `m` components with the
+// domMax feature set (layout animations, for the nav's sliding dot);
+// reducedMotion="user" drops transform animations
+// for visitors who ask for less motion.
 export default function App() {
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce) return
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray('[data-reveal]').forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 30,
-          duration: 0.9,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 85%' },
-        })
-      })
-    })
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <>
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Resume />
-        <Hobbies />
-        <Contact />
-      </main>
-    </>
+    <MotionConfig reducedMotion="user">
+      <LazyMotion features={domMax}>
+        <Nav />
+        <SectionRail />
+        <Background />
+        <main className="relative z-[1]">
+          <Hero />
+          <About />
+          <Projects />
+          <Resume />
+          <Hobbies />
+          <Contact />
+        </main>
+      </LazyMotion>
+    </MotionConfig>
   )
 }

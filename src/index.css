@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* DESIGN-v2 §3.2 additions */
+    --scrim: rgba(10, 10, 11, 0.72);
+    --hud: rgba(237, 234, 227, 0.07);
+    --hud-strong: rgba(237, 234, 227, 0.16);
+    --ghost: rgba(237, 234, 227, 0.035);
+    --amber-soft: rgba(240, 162, 39, 0.14);
+  }
   html {
     scroll-behavior: smooth;
   }
@@ -13,52 +21,95 @@
   ::selection {
     @apply bg-amber text-ink;
   }
+  /* One consistent amber focus ring, keyboard only (F6). */
+  :focus-visible {
+    outline: 2px solid theme('colors.amber');
+    outline-offset: 3px;
+  }
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 @layer components {
-  /* Ticket card: notched edges + cursor-driven 3D tilt */
-  .ticket {
+  /* Corner-bracket button (C5): reticle corners close in on hover/focus */
+  .bracket-btn {
     position: relative;
-    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
-      translateZ(0);
-    transform-style: preserve-3d;
-    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 300ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.1rem;
+    font-family: theme('fontFamily.mono');
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: theme('colors.bone');
+    transition: color 300ms cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .bracket-btn:hover,
+  .bracket-btn:focus-visible { color: theme('colors.amber'); }
+  .bracket {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-color: currentColor;
+    transition: transform 300ms cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .bracket.tl { left: 0; top: 0; border-left-width: 1px; border-top-width: 1px; }
+  .bracket.tr { right: 0; top: 0; border-right-width: 1px; border-top-width: 1px; }
+  .bracket.bl { left: 0; bottom: 0; border-left-width: 1px; border-bottom-width: 1px; }
+  .bracket.br { right: 0; bottom: 0; border-right-width: 1px; border-bottom-width: 1px; }
+  .bracket-btn:hover .bracket.tl, .bracket-btn:focus-visible .bracket.tl { transform: translate(3px, 3px); transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1); }
+  .bracket-btn:hover .bracket.tr, .bracket-btn:focus-visible .bracket.tr { transform: translate(-3px, 3px); transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1); }
+  .bracket-btn:hover .bracket.bl, .bracket-btn:focus-visible .bracket.bl { transform: translate(3px, -3px); transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1); }
+  .bracket-btn:hover .bracket.br, .bracket-btn:focus-visible .bracket.br { transform: translate(-3px, -3px); transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1); }
+  /* ---- Background layer (Background.jsx) ---- */
+  /* Ambient section tones (B8), cross-faded by scroll position. */
+  .tone-lift {
+    background: radial-gradient(130% 95% at 50% 45%, #0f0f12 0%, #0f0f12 55%, rgba(15, 15, 18, 0.55) 100%);
+  }
+  .tone-warm {
+    background:
+      radial-gradient(70% 60% at 74% 36%, rgba(240, 162, 39, 0.06), transparent 70%),
+      radial-gradient(55% 50% at 18% 78%, rgba(240, 162, 39, 0.03), transparent 70%);
+  }
+  /* HUD grid (B4): 64px hairlines that fade out toward the edges. */
+  .hud-mask {
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, #000 30%, transparent 100%);
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, #000 30%, transparent 100%);
+  }
+  .hud-grid {
+    background-image:
+      linear-gradient(to right, var(--hud) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--hud) 1px, transparent 1px);
+    opacity: 0.7; /* the grid reads stronger than single ticks, so it sits lower */
+    background-size: 64px 64px;
+    background-position: center top;
     will-change: transform;
   }
-  /* punched notches at the vertical mid-points of each edge */
-  .ticket::before,
-  .ticket::after {
+  /* Static 3% grain (B5) so near-black has texture. */
+  .grain {
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Readability scrim (B6): a soft-edged dark panel behind text-heavy blocks
+     so the field never cuts through body copy. Paint-only, no layout. */
+  .scrim {
+    position: relative;
+    isolation: isolate;
+  }
+  .scrim::before {
     content: '';
     position: absolute;
-    top: 50%;
-    height: 20px;
-    width: 20px;
-    border-radius: 9999px;
-    background: theme('colors.ink');
-    border: 1px solid theme('colors.line');
-    transform: translateY(-50%);
+    inset: -8px;
+    z-index: -1;
     pointer-events: none;
-    z-index: 2;
+    border-radius: 24px;
+    background: var(--scrim);
+    box-shadow: 0 0 56px 36px var(--scrim);
   }
-  .ticket::before { left: -10px; }
-  .ticket::after { right: -10px; }
-  .ticket:hover { border-color: rgba(240, 162, 39, 0.45); }
 
-  /* amber glint that tracks the cursor across the ticket face */
-  .ticket-glint {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0;
-    background: radial-gradient(
-      260px circle at var(--gx, 50%) var(--gy, 50%),
-      rgba(240, 162, 39, 0.16),
-      transparent 62%
-    );
-    transition: opacity 300ms ease;
-  }
-  .ticket:hover .ticket-glint { opacity: 1; }
+  /* Ticket card rules live in the "P4 cards & sections" block at the end. */
 
   /* dashed "stub" perforation inside the ticket */
   .ticket-perf {
@@ -111,11 +162,254 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .bracket { transition: none; }
+  .bracket-btn:hover .bracket, .bracket-btn:focus-visible .bracket { transform: none; }
   html { scroll-behavior: auto; }
-  .ticket { transform: none !important; transition: border-color 300ms ease; }
-  .ticket-glint { display: none; }
   .name-letter { transition: color 220ms ease; }
   .name-link:hover .name-letter { transform: none; }
   .launch-cta,
   .launch-dot { animation: none; }
 }
+
+/* --- P2 hero --- */
+/* Hero name lines (H1/H4): Instrument Serif at ~17vw. Each line is its own
+   overflow mask for the rise-in; the padding keeps descenders and the italic
+   overhang inside the mask without changing the line box. */
+.hero-name {
+  overflow: hidden;
+  font-family: theme('fontFamily.hero'); /* Tailwind font-hero */
+  font-size: clamp(4.6rem, 17vw, 15rem);
+  line-height: 0.84;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  padding: 0 0.1em 0.14em 0;
+  margin-bottom: -0.14em;
+}
+/* Display gradient (§3.1), "Winxon" only: lit from above. */
+.hero-grad {
+  background: linear-gradient(180deg, #edeae3 0%, #b9b5ac 40%, #6e6e77 75%, #2a2a30 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Soft vignette behind the lead + CTAs so the field never drops the text
+   below 4.5:1. Paint only. */
+.hero-scrim {
+  position: relative;
+  isolation: isolate;
+}
+.hero-scrim::before {
+  content: '';
+  position: absolute;
+  inset: -28px -48px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(10, 10, 11, 0.78), rgba(10, 10, 11, 0.5) 60%, transparent);
+}
+/* H7: slow availability pulse. */
+.hero-pulse { animation: hero-pulse 2.6s ease-in-out infinite; }
+@keyframes hero-pulse {
+  50% { opacity: 0.3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-pulse { animation: none; }
+}
+/* --- end P2 hero --- */
+
+/* --- P3 nav --- */
+/* Section rail (SectionRail.jsx, N3): the active tick's line grows 8 → 32px
+   and turns amber; names reveal on hover/focus. Transform/opacity/color only. */
+.rail-tick { color: theme('colors.muted'); }
+.rail-tick.is-active { color: theme('colors.amber'); }
+.rail-line {
+  transform: scaleX(0.25); /* 8px of the 32px line */
+  transform-origin: right center;
+  transition: transform 500ms cubic-bezier(0.19, 1, 0.22, 1), background-color 300ms ease;
+}
+.rail-tick:hover .rail-line { transform: scaleX(0.5); transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1); }
+.rail-tick.is-active .rail-line { transform: scaleX(1); }
+.rail-name {
+  opacity: 0;
+  transform: translateX(4px);
+  transition: opacity 250ms cubic-bezier(0.19, 1, 0.22, 1), transform 250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.rail-tick:hover .rail-name,
+.rail-tick:focus-visible .rail-name { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .rail-line, .rail-name { transition: none; }
+}
+/* --- end P3 nav --- */
+
+/* --- P4 cards & sections --- */
+/* Ticket card (TicketCard.jsx, DESIGN-v2 C1–C7). Hover-in uses ease-enter
+   over 0.3 s; everything returns with ease-exit over 0.5 s (media 0.6 s), so
+   the base rules carry the exit transition and the active rules the enter one. */
+.ticket {
+  position: relative;
+  /* Two true cut-out notches (r = 9px) at the vertical mid-points: each mask
+     layer covers one half of the card and punches its hole at that edge, so the
+     notches show whatever section tone or field sits behind the card. */
+  -webkit-mask:
+    radial-gradient(circle at 0 50%, #0000 9px, #000 9.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 50%, #0000 9px, #000 9.5px) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle at 0 50%, #0000 9px, #000 9.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 50%, #0000 9px, #000 9.5px) right / 51% 100% no-repeat;
+  transition: opacity 300ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+/* Hairline arc on the cut edge, so the notch reads as punched. */
+.ticket-notch {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  border: 1px solid theme('colors.line');
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 2;
+  transition: border-color 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.ticket-notch.l { left: -10px; }
+.ticket-notch.r { right: -10px; }
+
+/* C1 spotlight: an amber glow that follows the cursor, masked to the 1px
+   border ring, plus a faint --amber-soft fill. --mx/--my stay put on leave,
+   so the glow fades out where the cursor left it. */
+.ticket-ring {
+  position: absolute;
+  inset: -1px; /* sit on the card's own 1px border */
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(240, 162, 39, 0.95),
+    rgba(240, 162, 39, 0.35) 40%,
+    transparent 75%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.ticket-glint {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 50%),
+    var(--amber-soft),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* C2 detail reveal + C3 media zoom (resting states). */
+.ticket-detail {
+  transition: transform 500ms cubic-bezier(0.19, 1, 0.22, 1), opacity 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.ticket-arrow {
+  display: inline-block;
+  transition: transform 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.ticket-metric {
+  transition: color 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.ticket-media {
+  transition: transform 600ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Hover (mouse only: touch never gets a stuck hover state). */
+@media (hover: hover) and (pointer: fine) {
+  .ticket-detail { opacity: 0.62; transform: translateY(8px); }
+
+  .ticket:hover .ticket-ring,
+  .ticket:hover .ticket-glint {
+    opacity: 1;
+    transition: opacity 300ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .ticket:hover .ticket-notch {
+    border-color: rgba(240, 162, 39, 0.5);
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .ticket:hover .ticket-detail {
+    opacity: 1;
+    transform: none;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .ticket:hover .ticket-arrow {
+    transform: translate(3px, -3px);
+    transition: transform 300ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .ticket:hover .ticket-metric {
+    color: theme('colors.amber');
+    transition: color 300ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .ticket:hover .ticket-media {
+    transform: scale(1.03);
+    transition: transform 300ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /* C4 sibling dim: other cards in the same list drop to 55%. */
+  .ticket-list:has(.ticket:hover) .ticket:not(:hover) { opacity: 0.55; }
+}
+
+/* C7 keyboard parity: the same states while anything inside has
+   keyboard focus. The glow centres on the card unless the mouse moved it. */
+.ticket:has(:focus-visible) .ticket-ring,
+.ticket:has(:focus-visible) .ticket-glint {
+  opacity: 1;
+  transition: opacity 300ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.ticket:has(:focus-visible) .ticket-notch { border-color: rgba(240, 162, 39, 0.5); }
+.ticket:has(:focus-visible) .ticket-detail {
+  opacity: 1;
+  transform: none;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+.ticket:has(:focus-visible) .ticket-arrow { transform: translate(3px, -3px); }
+.ticket:has(:focus-visible) .ticket-metric { color: theme('colors.amber'); }
+.ticket:has(:focus-visible) .ticket-media { transform: scale(1.03); }
+.ticket-list:has(:focus-visible) .ticket:not(:has(:focus-visible)) { opacity: 0.55; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket-detail,
+  .ticket-arrow,
+  .ticket-media { transform: none !important; }
+}
+
+/* --- P5 footer --- */
+/* F1 monument wordmark (Footer.jsx): Instrument Serif, full-bleed, cropped
+   by the bottom of the page. The crop box sets the font size so its height
+   (and the cut through the letters) scales with the type. */
+.footer-crop {
+  position: relative;
+  overflow: hidden;
+  font-size: 19.2vw; /* "Winxon Nguyen" is ~4.97em wide: spans ~95% of the viewport */
+  height: 0.7em;
+  margin-top: clamp(32px, 6vw, 72px);
+}
+/* Display gradient inverted (§9 F1): dark at the top, lit from below.
+   It reaches full bone where the crop cuts, so the brightest band shows. */
+.footer-mark {
+  font-family: theme('fontFamily.hero');
+  font-size: 1em;
+  line-height: 0.84;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  text-align: center;
+  background: linear-gradient(180deg, #2a2a30 8%, #6e6e77 30%, #b9b5ac 58%, #edeae3 82%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  will-change: transform;
+}
+/* --- end P5 footer --- */

@@ -1,51 +1,37 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
-// A "ticket": notched card that tilts in 3D toward the cursor and carries an
-// amber glint that tracks the pointer. Notches, perforation and glint styling
-// live in index.css (.ticket / .ticket-glint). Honours prefers-reduced-motion;
-// pass tilt={false} when the card holds something interactive, like an iframe.
-export default function TicketCard({ as = 'div', className = '', tilt = true, children, ...rest }) {
+// A "ticket": a card with two punched notches (true cut-outs, so they work over
+// any section tone) and a cursor spotlight (DESIGN-v2 C1–C3, C6, C7).
+//
+// The component only tracks the pointer and writes --mx / --my; every visual
+// state lives in index.css (.ticket*), so hover-in / hover-out timing, focus
+// parity and the touch opt-out are pure CSS:
+//   C1  .ticket-ring  amber glow masked to the 1px border ring + .ticket-glint fill
+//   C2  .ticket-detail / .ticket-arrow / .ticket-metric  detail reveal
+//   C3  .ticket-media  figure scale inside a fixed frame
+//   C7  the same states on :has(:focus-visible)
+// On pointer leave the vars are left alone, so the glow fades out where it was.
+// The 3D tilt (old `tilt` prop) is gone per D3; the prop is still accepted and
+// ignored so older callers keep working.
+// eslint-disable-next-line no-unused-vars
+export default function TicketCard({ as: Comp = 'div', className = '', tilt, children, ...rest }) {
   const ref = useRef(null)
-  const reduce =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  // Flatten the card when tilt is switched off mid-hover.
-  useEffect(() => {
-    if (tilt || !ref.current) return
-    ref.current.style.setProperty('--rx', '0deg')
-    ref.current.style.setProperty('--ry', '0deg')
-  }, [tilt])
-
-  const onMove = (e) => {
-    const el = ref.current
-    if (!el || reduce || !tilt) return
-    const r = el.getBoundingClientRect()
-    const px = (e.clientX - r.left) / r.width - 0.5
-    const py = (e.clientY - r.top) / r.height - 0.5
-    el.style.setProperty('--ry', `${px * 6}deg`)
-    el.style.setProperty('--rx', `${py * -5}deg`)
-    el.style.setProperty('--gx', `${px * 100 + 50}%`)
-    el.style.setProperty('--gy', `${py * 100 + 50}%`)
-  }
-
-  const onLeave = () => {
+  const onPointerMove = (e) => {
+    if (e.pointerType !== 'mouse') return // touch/pen: no spotlight
     const el = ref.current
     if (!el) return
-    el.style.setProperty('--rx', '0deg')
-    el.style.setProperty('--ry', '0deg')
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`)
+    el.style.setProperty('--my', `${e.clientY - r.top}px`)
   }
 
-  const Comp = as
   return (
-    <Comp
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      className={`ticket ${className}`}
-      {...rest}
-    >
+    <Comp ref={ref} onPointerMove={onPointerMove} className={`ticket ${className}`} {...rest}>
       <span className="ticket-glint" aria-hidden="true" />
+      <span className="ticket-ring" aria-hidden="true" />
+      <span className="ticket-notch l" aria-hidden="true" />
+      <span className="ticket-notch r" aria-hidden="true" />
       {children}
     </Comp>
   )

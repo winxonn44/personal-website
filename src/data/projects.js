@@ -1,6 +1,6 @@
 // `feature: true` entries render as full cards with result bullets, media and
-// (optionally) a click-to-launch live app. The rest render as compact rows with
-// an optional figure. Every image is a real output of the project — no stock art.
+// (optionally) a click-to-launch live app. The rest render as a bento row of equal
+// tiles with an optional figure. Every image is a real output of the project — no stock art.
 const BASE = import.meta.env.BASE_URL
 
 export const projects = [
