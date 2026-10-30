@@ -21,6 +21,14 @@ export default function Contact() {
             <CopyEmail email={EMAIL} className="max-w-full font-mono text-[clamp(0.95rem,2.4vw,1.4rem)] tracking-[0.02em]" />
           </Reveal>
           <Reveal as="p" className="-ml-[1.1rem] mt-5 flex flex-wrap items-center gap-x-1 gap-y-1">
+            <a
+              href={`${import.meta.env.BASE_URL}resume.pdf`}
+              target="_blank"
+              rel="noreferrer"
+              className="ml-[1.1rem] mr-3 rounded-sm bg-amber px-4 py-2.5 font-mono text-[0.74rem] font-bold uppercase tracking-[0.12em] text-ink transition-[filter] hover:brightness-110"
+            >
+              Résumé PDF ↗<span className="sr-only"> (opens in a new tab)</span>
+            </a>
             <BracketButton href={`mailto:${EMAIL}`}>Email ↗</BracketButton>
             <BracketButton href="https://github.com/winxonn44" target="_blank" rel="noreferrer">GitHub ↗</BracketButton>
             <BracketButton href="https://www.linkedin.com/in/winxon-nguyen-ba166336b/" target="_blank" rel="noreferrer">LinkedIn ↗</BracketButton>

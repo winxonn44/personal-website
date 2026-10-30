@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- "W" drawn as a planned route through roadmap nodes: amber path, bone waypoints. -->
+  <rect width="32" height="32" rx="7" fill="#0A0A0B"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none" stroke="#26262b"/>
+  <polyline points="5.5,9 10.75,23 16,12.5 21.25,23 26.5,9" fill="none" stroke="#F0A227" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#EDEAE3">
+    <circle cx="5.5" cy="9" r="2"/>
+    <circle cx="16" cy="12.5" r="2"/>
+    <circle cx="26.5" cy="9" r="2"/>
+  </g>
+</svg>
