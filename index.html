@@ -7,14 +7,137 @@
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png" />
     <meta name="theme-color" content="#0A0A0B" />
-    <meta name="description" content="Winxon Nguyen builds autonomy and navigation software, from perception to planning, measured end to end. UCLA Applied Math + Statistics '28. Creator of VoroNav." />
+    <meta name="description" content="Winxon Nguyen, UCLA Applied Math + Statistics ’28 and U.S. citizen, builds autonomy and navigation software from perception to planning, measured end to end. Creator of VoroNav and lead developer of VoroLens. Seeking Summer 2027 internships." />
+    <link rel="canonical" href="https://winxonn44.github.io/personal-website/" />
+
+    <!-- Link previews (LinkedIn, Slack, iMessage, X). Absolute URLs: scrapers don't resolve relative ones. -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Winxon Nguyen" />
+    <meta property="og:title" content="Winxon Nguyen — Autonomy & navigation software" />
+    <meta property="og:description" content="UCLA Applied Math + Statistics ’28 · U.S. citizen. Offline navigation (VoroNav), in-browser segmentation (VoroLens), real-time sensor pipelines. Seeking Summer 2027 internships." />
+    <meta property="og:url" content="https://winxonn44.github.io/personal-website/" />
+    <meta property="og:image" content="https://winxonn44.github.io/personal-website/portrait.jpg" />
+    <meta property="og:image:alt" content="Portrait of Winxon Nguyen" />
+    <meta property="profile:first_name" content="Winxon" />
+    <meta property="profile:last_name" content="Nguyen" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Winxon Nguyen — Autonomy & navigation software" />
+    <meta name="twitter:description" content="UCLA Applied Math + Statistics ’28 · U.S. citizen. Offline navigation, in-browser segmentation, real-time sensor pipelines." />
+    <meta name="twitter:image" content="https://winxonn44.github.io/personal-website/portrait.jpg" />
+
+    <!-- Structured data for search engines. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Winxon Nguyen",
+        "url": "https://winxonn44.github.io/personal-website/",
+        "image": "https://winxonn44.github.io/personal-website/portrait.jpg",
+        "email": "mailto:winxonnguyen44@gmail.com",
+        "jobTitle": "Undergraduate, Applied Mathematics and Statistics",
+        "description": "Builds autonomy and navigation software, from perception to planning, measured end to end.",
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of California, Los Angeles" },
+        "knowsAbout": ["Autonomous navigation", "Path planning", "Voronoi diagrams", "Computer vision", "GPU programming", "State estimation", "Machine learning"],
+        "knowsLanguage": ["English", "Vietnamese", "Mandarin"],
+        "sameAs": ["https://github.com/winxonn44", "https://www.linkedin.com/in/winxon-nguyen-ba166336b/"]
+      }
+    </script>
+
+    <!-- The static summary in #root is for tools that read the HTML without running
+         JavaScript. Browsers that run scripts hide it at once and React replaces it. -->
+    <script>document.documentElement.classList.add('js')</script>
+    <style>
+      .js #static-summary { display: none; }
+      #static-summary { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem; font: 16px/1.55 system-ui, sans-serif; color: #EDEAE3; background: #0A0A0B; }
+      #static-summary a { color: #F0A227; }
+      #static-summary h2 { margin-top: 2.25rem; }
+    </style>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Keep in sync with src/data/projects.js and the About, Resume, Hobbies and Contact components. -->
+      <main id="static-summary">
+        <header>
+          <h1>Winxon Nguyen</h1>
+          <p><strong>Autonomy &amp; navigation software, from perception to planning, measured end to end.</strong></p>
+          <p>UCLA, BS Applied Mathematics (Computing) + BS Statistics &amp; Data Science, Class of 2028. U.S. citizen. Seeking Summer 2027 internships in autonomy, navigation, ground and flight software, computer vision, ML and software engineering.</p>
+          <p><a href="%BASE_URL%resume.pdf">Résumé (PDF)</a> · <a href="https://github.com/winxonn44">GitHub</a> · <a href="https://www.linkedin.com/in/winxon-nguyen-ba166336b/">LinkedIn</a> · <a href="mailto:winxonnguyen44@gmail.com">winxonnguyen44@gmail.com</a></p>
+        </header>
+
+        <section>
+          <h2>About</h2>
+          <p>Applied mathematician who builds the thing, then measures it: offline navigation, real-time sensor pipelines, and GPU kernels. Every claim ships with a benchmark, including the ones that came out a tie.</p>
+          <ul>
+            <li>Focus: perception, planning, GPU and parallel computing</li>
+            <li>Stack: Python, PyTorch, Numba, Metal, NumPy, C++, SQL</li>
+            <li>Also: founded and sold Twin Digital Media at 18</li>
+            <li>Languages: English, Vietnamese, Mandarin</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Selected work</h2>
+
+          <article>
+            <h3>VoroNav: offline navigation for autonomous systems (2026, flagship)</h3>
+            <p>Camera → SAM 2 floor mask → bird’s-eye grid → maximum-clearance Voronoi roadmap, fully on-device. The Voronoi engine (Jump Flooding) is written from scratch in NumPy, multithreaded Numba and a fused Metal GPU kernel, all bit-identical to an exact oracle.</p>
+            <ul>
+              <li>Fused Metal kernel: a 2048² Voronoi diagram in 14 ms, 276× faster than NumPy and 100× faster than eager PyTorch.</li>
+              <li>Benchmarked against A*, clearance-weighted A* and RRT* on 94 maps (58K planner runs): ≤0.1% collisions vs 0.6–1.1% for A*; ties tuned weighted A* on safety with 1.5–3.6× faster queries.</li>
+              <li>Fault-injection study (190K graded plans): a leak-detection gate raised recall from 8% to 65%.</li>
+            </ul>
+            <p>Python, PyTorch MPS, Metal, Numba, SAM 2, pytest (358 tests). <a href="https://github.com/winxonn44/voro-navi-system">Code and results</a></p>
+          </article>
+
+          <article>
+            <h3>VoroLens: segmentation-driven Voronoi mosaics in the browser (2026–now)</h3>
+            <p>Lead developer, UCLA Math + Code + Art. An interactive app for the Algorithmic Forms exhibition at the Oceanside Museum of Art (August 2027). Click any object and SlimSAM segments it, then mosaics only that object. SlimSAM runs entirely client-side in a Web Worker on WebGPU with a WASM fallback; images never leave the visitor’s device. Author of Chapter 2 of the lab’s open textbook, Voronoi Tessellation and Adaptive Sampling. A live version runs on this site.</p>
+            <p><a href="https://math-code-art.github.io/book/voronoi-mosaic/">Chapter 2</a> · <a href="https://math-code-art.github.io/">Lab site</a></p>
+          </article>
+
+          <article>
+            <h3>Fitted residual dynamics: transformers as interacting particles (research, in progress)</h3>
+            <p>BruinML, with two collaborators; manuscript in preparation. Records the residual stream of pretrained models (GPT-2, BERT, ALBERT), fits an autonomous attention ODE over windows of layers, and tests the clustering, energy and metastability predictions of the Geshkovski–Rigollet theory on real checkpoints.</p>
+          </article>
+
+          <article>
+            <h3>Real-time EEG focus detection (2025–now)</h3>
+            <p>CruX Neuroscience. Streams live EEG at 250 Hz through notch and band-pass filtering and artifact rejection into a per-user calibrated workload index (frontal θ / parietal α), exposed through a Python API.</p>
+          </article>
+
+          <article>
+            <h3>Multimodal signals for event-contract trading (2026)</h3>
+            <p>Founder, UCLA Startup Labs. A scraping and embedding pipeline (custom CNN for images, adapted NLP model for text) maps social signals into a 4-D feature space; backtested on about 50 Kalshi markets over four months (Sharpe 1.38).</p>
+          </article>
+        </section>
+
+        <section>
+          <h2>Experience</h2>
+          <ul>
+            <li>Researcher &amp; Lead Developer, UCLA Math + Code + Art (Apr 2026–present)</li>
+            <li>Developer, CruX Neuroscience (Sep 2025–present)</li>
+            <li>Developer, VoroNav, independent project (2026)</li>
+            <li>Founder, UCLA Startup Labs (2026)</li>
+            <li>Founder, Twin Digital Media (2023–2025): built and sold a social-media marketing company at 18</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Off the clock</h2>
+          <p>Field and jazz band: SCSBOA field-band medals, a 4A Division first place, and the Louis Armstrong Jazz Award (2025). An IB research paper used Fourier analysis to compare the harmonic makeup of instrument tones.</p>
+        </section>
+
+        <section>
+          <h2>Contact</h2>
+          <p>Email <a href="mailto:winxonnguyen44@gmail.com">winxonnguyen44@gmail.com</a> · <a href="%BASE_URL%resume.pdf">Résumé (PDF)</a> · <a href="https://github.com/winxonn44">GitHub</a> · <a href="https://www.linkedin.com/in/winxon-nguyen-ba166336b/">LinkedIn</a>. Available Summer 2027 · Los Angeles, CA · open to relocation.</p>
+        </section>
+      </main>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
