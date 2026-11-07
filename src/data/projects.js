@@ -8,16 +8,16 @@ export const projects = [
     idx: 'FIG.01',
     feature: true,
     tag: 'Flagship',
-    years: '2026',
+    years: '2026–now',
     title: 'VoroNav: offline navigation for autonomous systems',
     metric: '≤0.1%',
     metricSub: 'collisions · A* 0.6–1.1%',
     method:
-      'Camera → SAM 2 floor mask → bird’s-eye grid → maximum-clearance Voronoi roadmap, fully on-device. The Voronoi engine (Jump Flooding) is written from scratch in NumPy, multithreaded Numba and a fused Metal GPU kernel, all bit-identical to an exact oracle.',
+      'A robot navigation stack that runs fully offline: SAM 2 segments first-person video, a from-scratch parallel Voronoi engine (Jump Flooding) builds a maximum-clearance roadmap, and the planner keeps the robot away from walls. The engine has NumPy, multithreaded Numba, fused Metal and C++20 backends, all bit-identical to the NumPy reference.',
     points: [
-      'Fused int32 Metal kernel: a 2048² diagram in 14 ms, 276× faster than NumPy and 100× faster than eager PyTorch. Found by testing two hypotheses one at a time.',
-      'Benchmarked against A*, clearance-weighted A* and RRT* on 94 maps (58K planner runs): at least as safe as A* in 99.5% of queries; ties tuned weighted A* on safety with 1.5–3.6× faster queries.',
-      'Fault-injection study (190K graded plans): clearance halves collisions from mask leaks but not from missed obstacles; a leak-detection gate raised recall from 8% to 65%.',
+      'C++20 core (pybind11, hand-written thread pool, GoogleTest, ASan/UBSan/TSan in CI): 19.1 ms for a 2048² diagram, 3.4× faster than 10-thread Numba and 17× faster than the first serial port, from a division-free int16 layout the compiler vectorizes and a lock-free dynamic row scheduler. The fused Metal kernel still wins on large grids (14.3 ms), and the README says so.',
+      'Benchmarked against A*, clearance-weighted A* and RRT* on 94 maps (58K planner runs): minimum clearance matched or beat A* in 99.5% of queries (+70% mean clearance) with 1.5× faster queries. A tuned weighted A* ties it on safety; narrow passages are its weak spot (2.1× longer paths).',
+      'On real SAM 2 masks of first-person video, the clearance planners collided on ≤0.1% of plans against 0.6–1.1% for grid A*. A segmentation-error study showed a temporal filter cuts wall-leak collisions from 14% to 4%.',
     ],
     media: [
       {
@@ -26,14 +26,44 @@ export const projects = [
       },
     ],
     caption: 'First-person video → SAM 2 mask → bird’s-eye grid → Voronoi path (blue) vs grid A* (orange). ~0.5 s/frame on an M4 MacBook Air.',
-    stack: ['Python', 'PyTorch MPS', 'Metal', 'Numba', 'SAM 2', 'pytest · 358 tests'],
+    stack: ['Python', 'C++20', 'pybind11', 'PyTorch / Metal', 'Numba', 'SAM 2'],
     links: [
       ['Code + results', 'https://github.com/winxonn44/voro-navi-system'],
+      ['C++ optimization log', 'https://github.com/winxonn44/voro-navi-system/blob/main/docs/CORE.md'],
       ['Benchmarks (README)', 'https://github.com/winxonn44/voro-navi-system#q1-first-results-measured-apple-m4-10-cores'],
     ],
   },
   {
     idx: 'FIG.02',
+    feature: true,
+    tag: 'In progress',
+    years: '2026–now',
+    title: 'nav-ekf: state estimation for GPS-denied navigation',
+    metric: '96%',
+    metricSub: 'runs inside 3σ · 30 s GPS outage',
+    method:
+      'The estimation layer of the VoroNav stack. A 15-state error-state Kalman filter fuses a 6-axis IMU with GPS fixes. Derived by hand with every Jacobian checked against finite differences, and built in Python as the reference oracle for a C++20/Eigen port (next), then EuRoC and KITTI.',
+    points: [
+      'Statistically consistent over a 50-run Monte Carlo with a 30 s GPS dropout: NIS averaged 3.00 (expected 3) and NEES 15.75 sat inside its 95% χ² band; across 500 ungated runs NEES was 15.08 against 15.',
+      'Through the outage the error grows as the derived drift laws predict (about 12 m horizontal RMS after 30 s), and the filter’s own 3σ envelope still contains 96% of runs.',
+      'Ablations reported either way: Van Loan vs first-order discretization moved NEES by 0.016; an overconfident initial covariance pushed it to 469 and made the gate reject 55% of good fixes. A hard-gate lock-out after outages is logged as the next fix.',
+    ],
+    media: [
+      {
+        src: `${BASE}projects/nav-ekf/e2_outage.png`,
+        alt: 'Position error of 50 runs during a 30-second GPS outage, inside the filter’s plus or minus 3 sigma envelope',
+      },
+    ],
+    caption: 'GPS outage, 50 runs: each blue line is one run’s position error; orange is the filter’s own ±3σ, dashed is 3× the measured RMS.',
+    stack: ['Python', 'NumPy / SciPy', 'pytest · 80 tests', 'C++20 / Eigen (next)'],
+    links: [
+      ['Code', 'https://github.com/winxonn44/nav-ekf'],
+      ['Results', 'https://github.com/winxonn44/nav-ekf/blob/main/docs/results.md'],
+      ['Derivation', 'https://github.com/winxonn44/nav-ekf/blob/main/docs/derivation.md'],
+    ],
+  },
+  {
+    idx: 'FIG.03',
     feature: true,
     tag: 'Try it live',
     years: '2026–now',
@@ -59,7 +89,7 @@ export const projects = [
     ],
   },
   {
-    idx: 'FIG.03',
+    idx: 'FIG.04',
     tag: 'In progress',
     years: '2026–now',
     title: 'Fitted residual dynamics: transformers as interacting particles',
@@ -70,8 +100,8 @@ export const projects = [
     links: [],
   },
   {
-    idx: 'FIG.04',
-    years: '2025–now',
+    idx: 'FIG.05',
+    years: '2025–26',
     title: 'Real-time EEG focus detection',
     metric: '250 Hz',
     metricSub: 'live EEG stream',
@@ -85,7 +115,7 @@ export const projects = [
     links: [],
   },
   {
-    idx: 'FIG.05',
+    idx: 'FIG.06',
     years: '2026',
     title: 'Multimodal signals for event-contract trading',
     metric: '1.38',

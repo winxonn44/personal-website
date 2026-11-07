@@ -4,8 +4,8 @@ import Reveal from './Reveal.jsx'
 import GhostTitle from './GhostTitle.jsx'
 
 const roles = [
-  ['2026', 'Developer — VoroNav (independent project)', 'Offline perception-to-planning stack; from-scratch parallel Voronoi engine and 58K-run planner study.'],
-  ['Sep 2025–Present', 'Developer — CruX Neuroscience', 'Real-time 16-channel EEG pipeline and focus-state classifier behind a Python API.'],
+  ['2026–Present', 'Developer — VoroNav autonomy stack (independent)', 'Offline perception-to-planning stack: from-scratch Voronoi engine with a C++20 core 3.4× faster than multithreaded Numba, a 58K-run planner study, and an error-state Kalman filter (nav-ekf) consistent over 500 Monte Carlo runs.'],
+  ['Sep 2025–Jun 2026', 'Developer — CruX Neuroscience', 'Real-time EEG pipeline (250 Hz) and focus-state classifier behind a Python API.'],
   ['Apr 2026–Present', 'Researcher & Lead Developer — UCLA Math + Code + Art', 'SAM-driven Voronoi tessellation app for the Oceanside Museum of Art.'],
   ['2026', 'Founder — UCLA Startup Labs', 'Multimodal CNN + NLP embedding pipeline; backtested on Kalshi event contracts.'],
   ['2023–2025', 'Founder — Twin Digital Media', 'Built and sold a social-media marketing company at 18.'],

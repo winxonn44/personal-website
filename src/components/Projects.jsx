@@ -99,7 +99,7 @@ function LiveApp({ app, open, setOpen }) {
   )
 }
 
-// FIG.01 / FIG.02: large feature cards (the live VoroLens app needs the width).
+// FIG.01–03: large feature cards (the live VoroLens app needs the width).
 function Feature({ p }) {
   const [live, setLive] = useState(false)
   return (
@@ -161,7 +161,7 @@ function Feature({ p }) {
   )
 }
 
-// FIG.03–05: a bento row of equal tiles (S5). Metric top-right, label
+// FIG.04–06: a bento row of equal tiles (S5). Metric top-right, label
 // bottom-left, figure if the project has one. Stacks below lg.
 function Tile({ p }) {
   return (

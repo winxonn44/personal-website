@@ -7,7 +7,7 @@
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="apple-touch-icon" href="%BASE_URL%apple-touch-icon.png" />
     <meta name="theme-color" content="#0A0A0B" />
-    <meta name="description" content="Winxon Nguyen, UCLA Applied Math + Statistics ’28 and U.S. citizen, builds autonomy and navigation software from perception to planning, measured end to end. Creator of VoroNav and lead developer of VoroLens. Seeking Summer 2027 internships." />
+    <meta name="description" content="Winxon Nguyen, UCLA Applied Math + Statistics ’28 and U.S. citizen, builds autonomy and navigation software from perception to planning, measured end to end. Creator of VoroNav (offline navigation with a C++20 core and an error-state Kalman filter) and lead developer of VoroLens. Seeking Summer 2027 internships." />
     <link rel="canonical" href="https://winxonn44.github.io/personal-website/" />
 
     <!-- Link previews (LinkedIn, Slack, iMessage, X). Absolute URLs: scrapers don't resolve relative ones. -->
@@ -73,8 +73,8 @@
           <h2>About</h2>
           <p>Applied mathematician who builds the thing, then measures it: offline navigation, real-time sensor pipelines, and GPU kernels. Every claim ships with a benchmark, including the ones that came out a tie.</p>
           <ul>
-            <li>Focus: perception, planning, GPU and parallel computing</li>
-            <li>Stack: Python, PyTorch, Numba, Metal, NumPy, C++, SQL</li>
+            <li>Focus: perception, state estimation, planning, GPU and parallel computing</li>
+            <li>Stack: Python, C++20, PyTorch, Numba, Metal, NumPy, SQL</li>
             <li>Also: founded and sold Twin Digital Media at 18</li>
             <li>Languages: English, Vietnamese, Mandarin</li>
           </ul>
@@ -84,14 +84,24 @@
           <h2>Selected work</h2>
 
           <article>
-            <h3>VoroNav: offline navigation for autonomous systems (2026, flagship)</h3>
-            <p>Camera → SAM 2 floor mask → bird’s-eye grid → maximum-clearance Voronoi roadmap, fully on-device. The Voronoi engine (Jump Flooding) is written from scratch in NumPy, multithreaded Numba and a fused Metal GPU kernel, all bit-identical to an exact oracle.</p>
+            <h3>VoroNav: offline navigation for autonomous systems (2026–now, flagship)</h3>
+            <p>A robot navigation stack that runs fully offline: SAM 2 segments first-person video, a from-scratch parallel Voronoi engine (Jump Flooding) builds a maximum-clearance roadmap, and the planner keeps the robot away from walls. The engine has NumPy, multithreaded Numba, fused Metal and C++20 backends, all bit-identical to the NumPy reference.</p>
             <ul>
-              <li>Fused Metal kernel: a 2048² Voronoi diagram in 14 ms, 276× faster than NumPy and 100× faster than eager PyTorch.</li>
-              <li>Benchmarked against A*, clearance-weighted A* and RRT* on 94 maps (58K planner runs): ≤0.1% collisions vs 0.6–1.1% for A*; ties tuned weighted A* on safety with 1.5–3.6× faster queries.</li>
-              <li>Fault-injection study (190K graded plans): a leak-detection gate raised recall from 8% to 65%.</li>
+              <li>C++20 core (pybind11, hand-written thread pool, GoogleTest, ASan/UBSan/TSan in CI): 19.1 ms for a 2048² diagram, 3.4× faster than 10-thread Numba and 17× faster than the first serial port. The fused Metal kernel is still faster on large grids (14.3 ms).</li>
+              <li>Benchmarked against A*, clearance-weighted A* and RRT* on 94 maps (58K planner runs): minimum clearance matched or beat A* in 99.5% of queries (+70% mean clearance) with 1.5× faster queries; narrow passages are its weak spot (2.1× longer paths).</li>
+              <li>On real SAM 2 masks of first-person video: ≤0.1% collisions vs 0.6–1.1% for grid A*. A temporal filter cuts wall-leak collisions from 14% to 4%.</li>
             </ul>
-            <p>Python, PyTorch MPS, Metal, Numba, SAM 2, pytest (358 tests). <a href="https://github.com/winxonn44/voro-navi-system">Code and results</a></p>
+            <p>Python, C++20, pybind11, PyTorch/Metal, Numba, SAM 2. <a href="https://github.com/winxonn44/voro-navi-system">Code and results</a> · <a href="https://github.com/winxonn44/voro-navi-system/blob/main/docs/CORE.md">C++ optimization log</a></p>
+          </article>
+
+          <article>
+            <h3>nav-ekf: state estimation for GPS-denied navigation (2026–now, in progress)</h3>
+            <p>The estimation layer of the VoroNav stack: a 15-state error-state Kalman filter fusing a 6-axis IMU with GPS fixes, derived by hand with every Jacobian checked against finite differences, and built in Python as the reference for a C++20/Eigen port.</p>
+            <ul>
+              <li>Statistically consistent over a 50-run Monte Carlo with a 30 s GPS dropout: NIS averaged 3.00 (expected 3) and NEES 15.75 inside its 95% χ² band; 15.08 against 15 over 500 ungated runs.</li>
+              <li>After 30 s without GPS, about 12 m horizontal RMS error, with the filter’s 3σ envelope containing 96% of runs.</li>
+            </ul>
+            <p>Python, NumPy/SciPy, pytest (80 tests). <a href="https://github.com/winxonn44/nav-ekf">Code</a> · <a href="https://github.com/winxonn44/nav-ekf/blob/main/docs/results.md">Results</a></p>
           </article>
 
           <article>
@@ -106,7 +116,7 @@
           </article>
 
           <article>
-            <h3>Real-time EEG focus detection (2025–now)</h3>
+            <h3>Real-time EEG focus detection (2025–2026)</h3>
             <p>CruX Neuroscience. Streams live EEG at 250 Hz through notch and band-pass filtering and artifact rejection into a per-user calibrated workload index (frontal θ / parietal α), exposed through a Python API.</p>
           </article>
 
@@ -120,8 +130,8 @@
           <h2>Experience</h2>
           <ul>
             <li>Researcher &amp; Lead Developer, UCLA Math + Code + Art (Apr 2026–present)</li>
-            <li>Developer, CruX Neuroscience (Sep 2025–present)</li>
-            <li>Developer, VoroNav, independent project (2026)</li>
+            <li>Developer, VoroNav autonomy stack, independent project (2026–present)</li>
+            <li>Developer, CruX Neuroscience (Sep 2025–Jun 2026)</li>
             <li>Founder, UCLA Startup Labs (2026)</li>
             <li>Founder, Twin Digital Media (2023–2025): built and sold a social-media marketing company at 18</li>
           </ul>
