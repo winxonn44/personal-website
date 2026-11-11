@@ -74,7 +74,7 @@
           <p>Applied mathematician who builds the thing, then measures it: offline navigation, real-time sensor pipelines, and GPU kernels. Every claim ships with a benchmark, including the ones that came out a tie.</p>
           <ul>
             <li>Focus: perception, state estimation, planning, GPU and parallel computing</li>
-            <li>Stack: Python, C++20, PyTorch, Numba, Metal, NumPy, SQL</li>
+            <li>Stack: Python, C++20, Eigen, PyTorch, Numba, Metal, SQL, Django, PostgreSQL</li>
             <li>Also: founded and sold Twin Digital Media at 18</li>
             <li>Languages: English, Vietnamese, Mandarin</li>
           </ul>
@@ -96,12 +96,13 @@
 
           <article>
             <h3>nav-ekf: state estimation for GPS-denied navigation (2026–now, in progress)</h3>
-            <p>The estimation layer of the VoroNav stack: a 15-state error-state Kalman filter fusing a 6-axis IMU with GPS fixes, derived by hand with every Jacobian checked against finite differences, and built in Python as the reference for a C++20/Eigen port.</p>
+            <p>The estimation layer of the VoroNav stack: a 15-state error-state Kalman filter fusing a 6-axis IMU with position fixes, derived by hand with every Jacobian checked against finite differences, with a Python reference and a C++20/Eigen port that matches it to 1e-13 in simulation.</p>
             <ul>
-              <li>Statistically consistent over a 50-run Monte Carlo with a 30 s GPS dropout: NIS averaged 3.00 (expected 3) and NEES 15.75 inside its 95% χ² band; 15.08 against 15 over 500 ungated runs.</li>
-              <li>After 30 s without GPS, about 12 m horizontal RMS error, with the filter’s 3σ envelope containing 96% of runs.</li>
+              <li>Statistically consistent in simulation: over a 50-run Monte Carlo with a 30 s GPS dropout, NIS averaged 3.00 (expected 3) and NEES 15.75 sat inside its 95% χ² band; the filter’s 3σ envelope held 96% of runs at the end of the outage.</li>
+              <li>C++20/Eigen: 1.21 µs per IMU propagation and 1.86 µs per GPS update with zero heap allocations; 55 GoogleTests under ASan/UBSan.</li>
+              <li>On five real EuRoC drone flights the untuned filter proved overconfident during outages; diagnosed in-flight IMU noise at 30–40× the datasheet values. Tuning is next.</li>
             </ul>
-            <p>Python, NumPy/SciPy, pytest (80 tests). <a href="https://github.com/winxonn44/nav-ekf">Code</a> · <a href="https://github.com/winxonn44/nav-ekf/blob/main/docs/results.md">Results</a></p>
+            <p>C++20, Eigen, Python, GoogleTest, pytest. <a href="https://github.com/winxonn44/nav-ekf">Code</a> · <a href="https://github.com/winxonn44/nav-ekf/blob/main/docs/results.md">Results</a></p>
           </article>
 
           <article>
@@ -111,13 +112,24 @@
           </article>
 
           <article>
+            <h3>PairRank: ranking by “better or worse?”, tested on simulated users (2026)</h3>
+            <p>A simulation study plus a small app (Django REST Framework, PostgreSQL, Angular) on comparison-based ranking, inspired by Beli: how few better-or-worse questions place a new restaurant in someone’s list when people answer inconsistently. Every user is simulated with known true preferences; no data is collected from people.</p>
+            <ul>
+              <li>With 10% wrong answers in a list of 49, Bayesian bisection cuts placement error from 2.88 to 0.20 positions for 10.9 questions instead of 5.6.</li>
+              <li>A simulated A/B test needs 481 users per arm to detect a 0.25-position improvement at 80% power, validated by 2,000 simulated experiments (A/A false-positive rate 4.35%).</li>
+              <li>1,080 simulated transcripts replayed through the REST API give identical results; 8 PostgreSQL metric queries match pandas to 6e-14.</li>
+            </ul>
+            <p><a href="https://github.com/winxonn44/pair-rank">Code</a> · <a href="https://github.com/winxonn44/pair-rank/blob/main/docs/RESULTS.md">Results</a></p>
+          </article>
+
+          <article>
             <h3>Fitted residual dynamics: transformers as interacting particles (research, in progress)</h3>
             <p>BruinML, with two collaborators; manuscript in preparation. Records the residual stream of pretrained models (GPT-2, BERT, ALBERT), fits an autonomous attention ODE over windows of layers, and tests the clustering, energy and metastability predictions of the Geshkovski–Rigollet theory on real checkpoints.</p>
           </article>
 
           <article>
             <h3>Real-time EEG focus detection (2025–2026)</h3>
-            <p>CruX Neuroscience. Streams live EEG at 250 Hz through notch and band-pass filtering and artifact rejection into a per-user calibrated workload index (frontal θ / parietal α), exposed through a Python API.</p>
+            <p>CruX Neuroscience. Streams live 8-channel EEG at 250 Hz through notch and band-pass filtering and artifact rejection into a per-user calibrated workload index (frontal θ / parietal α), exposed through a Python API.</p>
           </article>
 
           <article>
@@ -131,6 +143,8 @@
           <ul>
             <li>Researcher &amp; Lead Developer, UCLA Math + Code + Art (Apr 2026–present)</li>
             <li>Developer, VoroNav autonomy stack, independent project (2026–present)</li>
+            <li>Researcher, BruinML (Sep 2026–present)</li>
+            <li>Developer, PairRank, independent project (2026)</li>
             <li>Developer, CruX Neuroscience (Sep 2025–Jun 2026)</li>
             <li>Founder, UCLA Startup Labs (2026)</li>
             <li>Founder, Twin Digital Media (2023–2025): built and sold a social-media marketing company at 18</li>

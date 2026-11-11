@@ -4,9 +4,11 @@ import Reveal from './Reveal.jsx'
 import GhostTitle from './GhostTitle.jsx'
 
 const roles = [
-  ['2026–Present', 'Developer — VoroNav autonomy stack (independent)', 'Offline perception-to-planning stack: from-scratch Voronoi engine with a C++20 core 3.4× faster than multithreaded Numba, a 58K-run planner study, and an error-state Kalman filter (nav-ekf) consistent over 500 Monte Carlo runs.'],
-  ['Sep 2025–Jun 2026', 'Developer — CruX Neuroscience', 'Real-time EEG pipeline (250 Hz) and focus-state classifier behind a Python API.'],
-  ['Apr 2026–Present', 'Researcher & Lead Developer — UCLA Math + Code + Art', 'SAM-driven Voronoi tessellation app for the Oceanside Museum of Art.'],
+  ['2026–Present', 'Developer — VoroNav autonomy stack (independent)', 'Offline perception-to-planning stack: from-scratch Voronoi engine with a C++20 core 3.4× faster than multithreaded Numba, a 58K-run planner study, and nav-ekf, an error-state Kalman filter in C++/Eigen tested on real EuRoC drone flights.'],
+  ['Apr 2026–Present', 'Researcher & Lead Developer — UCLA Math + Code + Art', 'Lead developer of VoroLens, the SAM-driven Voronoi mosaic app for the Oceanside Museum of Art (Aug 2027); author of Chapter 2 of the lab textbook.'],
+  ['Sep 2026–Present', 'Researcher — BruinML', 'Fitted residual dynamics: transformers as interacting particles (manuscript in preparation, with two collaborators).'],
+  ['2026', 'Developer — PairRank (independent)', 'Simulation study and Django/PostgreSQL/Angular app for comparison-based ranking, with a validated A/B-test power analysis.'],
+  ['Sep 2025–Jun 2026', 'Developer — CruX Neuroscience', 'Real-time 8-channel EEG pipeline (250 Hz) and focus-state classifier behind a Python API.'],
   ['2026', 'Founder — UCLA Startup Labs', 'Multimodal CNN + NLP embedding pipeline; backtested on Kalshi event contracts.'],
   ['2023–2025', 'Founder — Twin Digital Media', 'Built and sold a social-media marketing company at 18.'],
 ]

@@ -39,14 +39,14 @@ export const projects = [
     tag: 'In progress',
     years: '2026–now',
     title: 'nav-ekf: state estimation for GPS-denied navigation',
-    metric: '96%',
-    metricSub: 'runs inside 3σ · 30 s GPS outage',
+    metric: '1.2 µs',
+    metricSub: 'per IMU step · C++, zero heap',
     method:
-      'The estimation layer of the VoroNav stack. A 15-state error-state Kalman filter fuses a 6-axis IMU with GPS fixes. Derived by hand with every Jacobian checked against finite differences, and built in Python as the reference oracle for a C++20/Eigen port (next), then EuRoC and KITTI.',
+      'The estimation layer of the VoroNav stack: a 15-state error-state Kalman filter fusing a 6-axis IMU with position fixes. Derived by hand with every Jacobian checked against finite differences, with a Python reference and a C++20/Eigen port that matches it to 1e-13 in simulation.',
     points: [
-      'Statistically consistent over a 50-run Monte Carlo with a 30 s GPS dropout: NIS averaged 3.00 (expected 3) and NEES 15.75 sat inside its 95% χ² band; across 500 ungated runs NEES was 15.08 against 15.',
-      'Through the outage the error grows as the derived drift laws predict (about 12 m horizontal RMS after 30 s), and the filter’s own 3σ envelope still contains 96% of runs.',
-      'Ablations reported either way: Van Loan vs first-order discretization moved NEES by 0.016; an overconfident initial covariance pushed it to 469 and made the gate reject 55% of good fixes. A hard-gate lock-out after outages is logged as the next fix.',
+      'Statistically consistent in simulation: over a 50-run Monte Carlo with a 30 s GPS dropout, NIS averaged 3.00 (expected 3) and NEES 15.75 sat inside its 95% χ² band, and the filter’s 3σ envelope held 96% of runs at the end of the outage.',
+      'C++20/Eigen port: 1.21 µs per IMU propagation and 1.86 µs per GPS update with zero heap allocations (about 0.03% of one core at 200 Hz), 55 GoogleTests under ASan/UBSan, and parity with Python on 32,000 steps of real flight data.',
+      'On five real EuRoC drone flights (200 Hz MEMS IMU), the untuned filter proved overconfident during outages. The diagnosis: in-flight IMU noise is 30–40× the datasheet values. That finding stays in the README, and tuning is the next checkpoint.',
     ],
     media: [
       {
@@ -54,8 +54,8 @@ export const projects = [
         alt: 'Position error of 50 runs during a 30-second GPS outage, inside the filter’s plus or minus 3 sigma envelope',
       },
     ],
-    caption: 'GPS outage, 50 runs: each blue line is one run’s position error; orange is the filter’s own ±3σ, dashed is 3× the measured RMS.',
-    stack: ['Python', 'NumPy / SciPy', 'pytest · 80 tests', 'C++20 / Eigen (next)'],
+    caption: 'Simulated GPS outage, 50 runs: each blue line is one run’s position error; orange is the filter’s own ±3σ, dashed is 3× the measured RMS.',
+    stack: ['C++20', 'Eigen', 'Python', 'GoogleTest · pytest', 'EuRoC MAV'],
     links: [
       ['Code', 'https://github.com/winxonn44/nav-ekf'],
       ['Results', 'https://github.com/winxonn44/nav-ekf/blob/main/docs/results.md'],
@@ -90,6 +90,33 @@ export const projects = [
   },
   {
     idx: 'FIG.04',
+    feature: true,
+    tag: 'Full stack',
+    years: '2026',
+    title: 'PairRank: ranking by “better or worse?”, tested on simulated users',
+    metric: '14×',
+    metricSub: 'less placement error · 2× questions',
+    method:
+      'How few “better or worse?” questions place a new restaurant in someone’s ranked list when people answer inconsistently. A simulation study plus a small app (Django REST Framework, PostgreSQL, Angular), inspired by the restaurant app Beli. Every user is simulated with known true preferences, so error is measured exactly and no data is collected from people.',
+    points: [
+      'Placement: with 10% wrong answers in a list of 49, Bayesian bisection cuts error from 2.88 to 0.20 positions (about 14×) for 10.9 questions instead of 5.6, right at the ~10.6-question information floor. When mistakes cluster on close pairs, the gain shrinks to about 2×.',
+      'Experiment design: a simulated A/B test needs 481 users per arm to detect a 0.25-position improvement at 80% power, checked against 2,000 simulated experiments (A/A false-positive rate 4.35%). The hypotheses that failed are kept in the results.',
+      'The app runs the evaluated code: 1,080 simulated transcripts replayed through the REST API give identical questions and final positions, with idempotent answers, 409s on concurrent conflicts, and 8 PostgreSQL metric queries matching pandas to 6e-14, Postgres included in CI.',
+    ],
+    media: [
+      { src: `${BASE}projects/pair-rank/demo.gif`, alt: 'The PairRank app adding a tenth restaurant to a list by answering better-or-worse questions' },
+      { src: `${BASE}projects/pair-rank/q1_error_vs_questions.png`, alt: 'Average placement error against questions asked for five ranking strategies' },
+    ],
+    caption: 'The local app with scripted answers, and the trade-off: fewer mistakes cost more questions (list of 49, 10% wrong answers).',
+    stack: ['Python', 'Django REST Framework', 'PostgreSQL', 'Angular / TypeScript', 'Docker', 'GitHub Actions'],
+    links: [
+      ['Code', 'https://github.com/winxonn44/pair-rank'],
+      ['Results', 'https://github.com/winxonn44/pair-rank/blob/main/docs/RESULTS.md'],
+      ['Write-up', 'https://github.com/winxonn44/pair-rank/blob/main/docs/WRITEUP.md'],
+    ],
+  },
+  {
+    idx: 'FIG.05',
     tag: 'In progress',
     years: '2026–now',
     title: 'Fitted residual dynamics: transformers as interacting particles',
@@ -100,13 +127,13 @@ export const projects = [
     links: [],
   },
   {
-    idx: 'FIG.05',
+    idx: 'FIG.06',
     years: '2025–26',
     title: 'Real-time EEG focus detection',
     metric: '250 Hz',
     metricSub: 'live EEG stream',
     method:
-      'CruX Neuroscience. Streams live EEG through notch and band-pass filtering and artifact rejection into a per-user calibrated workload index (frontal θ / parietal α), exposed through a Python API.',
+      'CruX Neuroscience. Streams live 8-channel EEG at 250 Hz through notch and band-pass filtering and artifact rejection into a per-user calibrated workload index (frontal θ / parietal α), exposed through a Python API.',
     figure: {
       src: `${BASE}projects/crux/eeg-workload.png`,
       alt: 'Filtered frontal EEG traces and the theta/alpha workload index over a three-minute session',
@@ -115,7 +142,7 @@ export const projects = [
     links: [],
   },
   {
-    idx: 'FIG.06',
+    idx: 'FIG.07',
     years: '2026',
     title: 'Multimodal signals for event-contract trading',
     metric: '1.38',

@@ -7,7 +7,7 @@ const facts = [
   ['Degrees', 'BS Applied Math (Computing) + BS Statistics & Data Science'],
   ['School', 'UCLA · Class of 2028'],
   ['Focus', 'Perception · state estimation · planning · GPU computing'],
-  ['Stack', 'Python · C++20 · PyTorch · Numba · Metal · NumPy · SQL'],
+  ['Stack', 'Python · C++20 · Eigen · PyTorch · Metal · SQL · Django'],
   ['Also', 'Founded & sold Twin Digital Media at 18'],
   ['Status', 'U.S. Citizen · seeking Summer 2027 internships'],
   ['Languages', 'English · Vietnamese · Mandarin'],
